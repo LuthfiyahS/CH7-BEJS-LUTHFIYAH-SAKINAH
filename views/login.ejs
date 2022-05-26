@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- START: Head-->
+    <head>
+      <%- include('./partials/head'); %>
+    </head>
+    <!-- END Head-->
+
+    <!-- START: Body-->
+    <body id="main-container" class="default">
+      <script>
+        function handleCredentialResponse(response) {
+          console.log(response)
+        }
+      </script>
+        <!-- START: Main Content-->
+        <div class="container">
+            <div class="row vh-100 justify-content-between align-items-center">
+                <div class="col-12">
+                    <form action="/logins" method="post" class="row row-eq-height lockscreen  mt-5 mb-5">
+                        <div class="login-form col-12 col-sm-12">
+                          <% if(messages.error) { %>
+                          <script>alert(`<%= messages.error %>`)</script>
+                          <% } %>
+                          <h5>LOGIN</h5>
+                            <div class="form-group mb-3">
+                                <label for="emailaddress">Username</label>
+                                <input class="form-control" type="text" id="username" name="username" placeholder="Enter your email">
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="password">Password</label>
+                                <input class="form-control" type="password" id="password" name="password" placeholder="Enter your password">
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button class="btn btn-primary" type="submit"> Log In </button>
+                            </div>
+                            
+                            <div class="mt-2">Don't have an account? <a href="/register">Create an Account</a></div>
+                            
+                            <div id="g_id_onload"
+                                data-client_id="930499613773-7ok7dfphvj1rlsvajqpv4jvabdiilrof.apps.googleusercontent.com"
+                                data-callback="handleCredentialResponse">
+                            </div>
+                            <div class="g_id_signin" data-type="standard"></div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- END: Content-->
+        <%- include('./partials/foot'); %>
+    </body>
+    <!-- END: Body-->
+</html>

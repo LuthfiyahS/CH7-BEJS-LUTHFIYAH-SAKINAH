@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../partials/head'); %>
+</head>
+
+<body id="main-container" class="default">
+    <!-- START: Header-->
+    <div id="header-fix" class="header fixed-top">
+        <div class="site-width">
+            <%- include('../../partials/nav'); %>
+        </div>
+    </div>
+    <!-- END: Header-->
+
+    <!-- START: Main Menu-->
+    <div class="sidebar">
+        <%- include('../../partials/sidebar2'); %>
+    </div>
+    <!-- END: Main Menu-->
+    <!-- START: Main Content-->
+    <main>
+        <div class="container-fluid site-width">
+            <!-- START: Breadcrumbs-->
+            <div class="row">
+                <div class="col-12  align-self-center">
+                    <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                        <div class="w-sm-100 mr-auto">
+                            <h4 class="mb-0">User Games History</h4>
+                            <p class="text-warning">History is null or not available, please insert for this user</p>
+                        </div>
+
+                        <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">User Games History</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Breadcrumbs-->
+
+            <!--Mulai Tabel-->
+            <div class="col-12 col-lg-12 mt-3">
+                <div class="card">
+                    <div class="card-header">                               
+                        <h4 class="card-title">Update User Games History <%= user_games_history.id %></h4>                                
+                    </div>
+                    <div class="card-content">
+                        <div class="card-body">
+                            <div class="row">                                           
+                                <div class="col-12">
+                                    <input type="hidden" class="form-control" id="id-update" name="id-update"
+                                        value="<%= user_games_history.id %>" />
+                                        <div class="row">
+                                            <label for="username" class="col-sm-2 col-form-label">User ID</label>
+                                            <div class="col-sm-10">  
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent border-right-0" id="basic-addon11"><i class="icon-people"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" aria-label="user_id" aria-describedby="basic-addon1" name="user_id" id="user_id" value="<%= user_games_history.user_id %>" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for="username" class="col-sm-2 col-form-label">Score</label>
+                                            <div class="col-sm-10">  
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent border-right-0" id="basic-addon11"><i class="icon-user"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="score" aria-label="score" aria-describedby="basic-addon1" name="score" id="score" value="<%= user_games_history.score %>">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for="username" class="col-sm-2 col-form-label">Session Start</label>
+                                            <div class="col-sm-10">  
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent border-right-0" ><i class="icon-clock"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="2022-04-07 10:10:00" aria-label="session_start" aria-describedby="basic-addon1" name="session_start" id="session_start" value="<%= moment(user_games_history.session_start).format('YYYY-MM-DD hh:mm:ss') %>" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label for="username" class="col-sm-2 col-form-label">Session End</label>
+                                            <div class="col-sm-10">  
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg-transparent border-right-0" ><i class="icon-clock"></i></span>
+                                                    </div>
+                                                    <input type="text" class="form-control" placeholder="2022-04-07 20:10:00" aria-label="session_end" aria-describedby="basic-addon1" name="session_end" id="session_end"  value="<%= moment(user_games_history.session_end).format('YYYY-MM-DD hh:mm:ss') %>" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-10">
+                                                <button onclick="putOperation()"  class="btn btn-primary">Update</button> 
+                                                <button onclick="delOperation()"  class="btn btn-danger">Delete</button> 
+                                                <a href="/user-games"><button class="btn btn-outline-warning">Cancel</button></a>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+    <script>
+      async function putOperation() {
+        try {
+          const id = document.getElementById("id-update").value;
+          const uid = document.getElementById("user_id").value;
+          console.log('id di viewnya ', id)
+          const response = await axios.put(`/user-games/history/update/${id}`, {
+            id: document.getElementById("id-update").value,
+            user_id: document.getElementById("user_id").value,
+            score: document.getElementById("score").value,
+            session_start: document.getElementById("session_start").value,
+            session_end: document.getElementById("session_end").value,
+          })
+            .then(function (response) {
+              alert(`Sukses Update Data User Games history`)
+              window.location = `/user-games/history/${uid}`
+            })
+            .catch(function (error) {
+              alert(`Pastikan anda mengisi tanggal lahir anda, abaikan jika sudah mengisinya`)
+              window.location = `/user-games/history/${uid}`
+            })
+        } catch (error) {
+          alert(error)
+          window.location = "/user-games"
+        }
+      }
+
+      async function delOperation() {
+        try {
+          const id = document.getElementById("id-update").value;
+          const user_id = document.getElementById("user_id").value;
+          console.log('id di viewnya ', id)
+          console.log('user id di viewnya ', user_id)
+          const response = await axios.delete(`/user-games/history/delete/${id}`, {
+            id: document.getElementById("id-update").value,
+            user_id: document.getElementById("user_id").value,
+          })
+            .then(function (response) {
+              alert(`Sukses Hapus Data User Games history`)
+              window.location = `/user-games/history/${user_id}`
+            })
+            .catch(function (error) {
+              alert(`Sukses Hapus Data User Games history`)
+              window.location = `/user-games/history/${user_id}`
+            })
+        } catch (error) {
+          alert(error)
+          window.location = "/user-games"
+        }
+      }
+    </script>
+    <!-- END: Content-->
+    <%- include('../../partials/foot'); %>
+</body>
+
+</html>

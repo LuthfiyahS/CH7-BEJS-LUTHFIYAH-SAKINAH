@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!-- START: Head-->
+    <head>
+      <%- include('./partials/head'); %>
+    </head>
+    <!-- END Head-->
+
+    <!-- START: Body-->
+    <body id="main-container" class="default">
+        <!-- START: Main Content-->
+        <div class="container">
+            <div class="row vh-100 justify-content-between align-items-center">
+                <div class="col-12">
+                    <form action="/registers" method="post" class="row row-eq-height lockscreen  mt-5 mb-5">
+                        
+                        <div class="login-form col-12 col-sm-12">
+                            <h5>SIGN UP</h5>
+                            <div class="form-group mb-3">
+                                <label for="emailaddress">Username</label>
+                                <input class="form-control" type="text" id="username" name="username" required="" placeholder="Enter your username">
+                            </div>
+                            <div class="form-group mb-3">
+                              <label for="emailaddress">Email address</label>
+                              <input class="form-control" type="email" id="email" name="email" required="" placeholder="Enter your email">
+                          </div>
+                            <div class="form-group mb-3">
+                                <label for="password">Password</label>
+                                <input class="form-control" type="password" required="" id="password" name="password" placeholder="Enter your password">
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button class="btn btn-primary" type="submit"> Sign Up </button>
+                            </div>
+                            
+                            <div class="mt-2">Have an account? <a href="/login">Sign an Account</a></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- END: Content-->
+        <%- include('./partials/foot'); %>
+    </body>
+    <!-- END: Body-->
+</html>

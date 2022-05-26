@@ -1,0 +1,778 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "that's API Documentation using Swagger no generate",
+    "version": "1.0.0",
+    "title": "API Documentation(SWAGGER GAMES)",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [{
+      "name": "auth",
+      "description": "Login and Register ACC"
+    },
+    {
+      "name": "user games",
+      "description": "Everything about user games"
+    },
+    {
+      "name": "user games biodata",
+      "description": "Access to games "
+    },
+    {
+      "name": "user games history",
+      "description": "Operations about user"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create user",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "createUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Created user object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UserLogin"
+          }
+        }],
+        "responses": {
+          "default": {
+            "description": "successful operation"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "loginUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "in": "body",
+          "name": "body",
+          "description": "Created user object",
+          "required": true,
+          "schema": {
+            "$ref": "#/definitions/UserLogin"
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user-games": {
+      "get": {
+        "tags": [
+          "user games"
+        ],
+        "summary": "Get All user games",
+        "description": "",
+        "operationId": "getUsergames",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "user games"
+        ],
+        "summary": "Input user games",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "insert User",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Insert user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGames"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user-games/insert": {
+      "post": {
+        "tags": [
+          "user games"
+        ],
+        "summary": "Input user games with query param",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "insertUserQuery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "The user name for login",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The email for login in clear text",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user-games/{id}": {
+      "put": {
+        "tags": [
+          "user games"
+        ],
+        "summary": "Updated user games",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "description": "id that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGames"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "user games"
+        ],
+        "summary": "Deletes an user games",
+        "description": "",
+        "operationId": "deleteUserGames",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pet id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "user games"
+        ],
+        "summary": "Find purchase  by ID",
+        "description": "For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions",
+        "operationId": "getById",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "ID of pet that needs to be fetched",
+          "required": true,
+          "type": "integer",
+          "maximum": 10,
+          "minimum": 1,
+          "format": "int64"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserGames"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": " not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user-games-biodata": {
+      "get": {
+        "tags": [
+          "user games biodata"
+        ],
+        "summary": "Get All user games",
+        "description": "",
+        "operationId": "getUserGamesBiodata",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "user games biodata"
+        ],
+        "summary": "Input user games",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "insert User biodata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Insert user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGamesBiodata"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user-games-biodata/{id}": {
+      "put": {
+        "tags": [
+          "user games biodata"
+        ],
+        "summary": "Updated user games",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser biodata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "description": "id that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGamesBiodata"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "user games biodata"
+        ],
+        "summary": "Deletes an user games",
+        "description": "",
+        "operationId": "deleteUserGamesBiodata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pet id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "user games biodata"
+        ],
+        "summary": "Find purchase  by ID",
+        "description": "For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions",
+        "operationId": "getById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "ID of pet that needs to be fetched",
+          "required": true,
+          "type": "integer",
+          "maximum": 10,
+          "minimum": 1,
+          "format": "int64"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserGamesBiodata"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": " not found"
+          }
+        }
+      }
+    },
+    "/user-games-history": {
+      "get": {
+        "tags": [
+          "user games history"
+        ],
+        "summary": "Get All user games",
+        "description": "",
+        "operationId": "getUserGamesBiodata",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "405": {
+            "description": "Invalid input"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "user games history"
+        ],
+        "summary": "Input user games",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "insert User biodata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Insert user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGamesHistory"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user-games-history/{id}": {
+      "put": {
+        "tags": [
+          "user games history"
+        ],
+        "summary": "Updated user games",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "updateUser biodata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+            "name": "id",
+            "in": "path",
+            "description": "id that need to be updated",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserGamesHistory"
+            }
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid user supplied"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "user games history"
+        ],
+        "summary": "Deletes an user games",
+        "description": "",
+        "operationId": "deleteUserGamesBiodata",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Pet id to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "user games history"
+        ],
+        "summary": "Find purchase  by ID",
+        "description": "For valid response try integer IDs with value >= 1 and <= 10.         Other values will generated exceptions",
+        "operationId": "getById",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "description": "ID of pet that needs to be fetched",
+          "required": true,
+          "type": "integer",
+          "maximum": 10,
+          "minimum": 1,
+          "format": "int64"
+        }],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/UserGamesHistory"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": " not found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "bearerAuth": {
+      "name": "Authorization",
+      "in": "header",
+      "type": "apiKey",
+      "description": "JWT Authorization header"
+    }
+  },
+  "security": [ { "bearerAuth": [] } ],
+  "definitions": {
+    "UserLogin": {
+      "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "pialuthfia"
+        },
+        "password": {
+          "type": "string",
+          "example": "123"
+        }
+      }
+    },
+    "UserGames": {
+      "type": "object",
+      "required": [
+        "username",
+        "password",
+        "email"
+      ],
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "pialuthfia"
+        },
+        "password": {
+          "type": "string",
+          "example": "123"
+        },
+        "email": {
+          "type": "string",
+          "example": "pia@gmail.com"
+        }
+      }
+    },
+    "UserGamesBiodata": {
+      "type": "object",
+      "required": [
+        "user_id",
+        "score",
+        "fullname",
+        "gender"
+      ],
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "example": "3"
+        },
+        "score": {
+          "type": "integer",
+          "example": "332"
+        },
+        "fullname": {
+          "type": "string",
+          "example": "Mail bin Main"
+        },
+        "gender": {
+          "type": "string",
+          "example": "Maile"
+        }
+      }
+    },
+    "UserGamesHistory": {
+      "type": "object",
+      "required": [
+        "user_id",
+        "obtained_score"
+      ],
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "example": "2"
+        },
+        "obtained_score": {
+          "type": "integer",
+          "example": "123"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

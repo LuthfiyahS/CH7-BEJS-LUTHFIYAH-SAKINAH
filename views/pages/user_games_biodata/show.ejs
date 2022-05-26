@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../../partials/head'); %>
+</head>
+
+<body id="main-container" class="default">
+  <!-- START: Header-->
+  <div id="header-fix" class="header fixed-top">
+    <div class="site-width">
+      <%- include('../../partials/nav'); %>
+    </div>
+  </div>
+  <!-- END: Header-->
+
+  <!-- START: Main Menu-->
+  <div class="sidebar">
+    <%- include('../../partials/sidebar2'); %>
+  </div>
+  <!-- END: Main Menu-->
+  <!-- START: Main Content-->
+  <main>
+    <div class="container-fluid site-width">
+      <!-- START: Breadcrumbs-->
+      <div class="row">
+        <div class="col-12  align-self-center">
+          <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto">
+              <h4 class="mb-0">Biodata <%= user_games_biodata.fullname %></h4>
+              <p>That's your profile</p>
+            </div>
+
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">User Games Biodata</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- END: Breadcrumbs-->
+
+      <div class="row">
+        <div class="col-12 col-lg-12">
+          <div class="col-12 col-sm-12">
+            <div class="card bg-primary">
+                <div class="card-body">
+                    <div class='d-flex px-0 px-lg-2 py-2 align-self-center'>
+                        <i class="icon-people icons card-liner-icon mt-2 text-white"></i>
+                        <div class='card-liner-content'>
+                            <h6 class="card-liner-subtitle text-white">Introduce my name</h6>
+                            <h2 class="card-liner-title text-white"><%= user_games_biodata.fullname %></h2>
+                        </div>                                
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>  
+    </div>
+    <div class="col-12 col-lg-12 mt-3">
+      <div class="card outline-badge-primary">                            
+          <div class="card-content">
+              <div class="card-body">   
+                  <div class="d-md-flex">
+                      <div class="my-auto">
+                          <i class="icon-people icons card-liner-icon mt-2 "></i>
+                      </div>
+                      <div class="content px-md-3 my-3 my-md-0">                                        
+                          <p class="mb-0 font-w-500 tx-s-12">Name</p>
+                          <span class="mb-0 font-w-600 h6"><%= user_games_biodata.fullname %></span><br>
+                          <p class="mb-0 font-w-500 tx-s-12">Gender</p>
+                          <span class="mb-0 font-w-600 h6"><%= user_games_biodata.gender %></span><br>
+                          <p class="mb-0 font-w-500 tx-s-12">Birth</p>
+                          <span class="mb-0 font-w-600 h6"><%= user_games_biodata.place_of_birth %>,<%= moment(user_games_biodata.date_of_birth).format('Do MMMM, YYYY') %></span><br>
+                          <p class="mb-0 font-w-500 tx-s-12">Address</p>
+                          <span class="mb-0 font-w-600 h6"><%= user_games_biodata.address %></span><br>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>  
+    <!--Mulai Tabel-->
+      <div class="col-12 col-lg-12 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Edit User Games Biodata</h4>
+          </div>
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <input type="hidden" class="form-control" id="id-update" name="id-update"
+                    value="<%= user_games_biodata.id %>" />
+                    <div class="row">
+                      <label for="username" class="col-sm-2 col-form-label">ID</label>
+                      <div class="col-sm-10">  
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text bg-transparent border-right-0" id="basic-addon11"><i class="icon-people"></i></span>
+                              </div>
+                              <input type="text" class="form-control" aria-label="user_id" aria-describedby="basic-addon1" name="user_id" id="user_id" value="<%= user_games_biodata.user_id%>">
+                          </div>
+                      </div>
+                  </div>
+                    <div class="row">
+                      <label for="username" class="col-sm-2 col-form-label">Fullname</label>
+                      <div class="col-sm-10">  
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text bg-transparent border-right-0" id="basic-addon11"><i class="icon-user"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Fullname" aria-label="Fullname" aria-describedby="basic-addon1" name="fullname" id="fullname" value="<%= user_games_biodata.fullname %>"> 
+                          </div>
+
+                      </div>
+                  </div>
+                  <div class="row">
+                      <label for="username" class="col-sm-2 col-form-label">Gender</label>
+                      <div class="col-sm-10">  
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text bg-transparent border-right-0" ><i class="icon-options"></i></span>
+                              </div>
+                              <select name="gender" id="gender"  class="form-control">
+                                  <option value="<%= user_games_biodata.gender %>" selected><%= user_games_biodata.gender %></option>
+                                  <option value="-">-</option>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <label for="username" class="col-sm-2 col-form-label">Date of Birth</label>
+                      <div class="col-sm-10">  
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text bg-transparent border-right-0"><i class="icon-calendar"></i></span>
+                              </div>
+                              <input type="date" class="form-control" placeholder="date_of_birth" aria-label="date_of_birth" aria-describedby="date_of_birth" name="date_of_birth" id="date_of_birth" required="" value="<%= moment(user_games_biodata.date_of_birth).format('YYYY-MM-DD') %>"> 
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <label for="username" class="col-sm-2 col-form-label">Place of Birth</label>
+                      <div class="col-sm-10">  
+                          <div class="input-group mb-3">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text bg-transparent border-right-0"><i class="icon-map"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Place of birth" aria-label="place_of_birth" aria-describedby="place_of_birth" name="place_of_birth" id="place_of_birth" value="<%= user_games_biodata.place_of_birth %>">
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                    <label for="username" class="col-sm-2 col-form-label">Address</label>
+                    <div class="col-sm-10">  
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent border-right-0"><i class="icon-map"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Address" aria-label="Password" aria-describedby="basic-address" name="address" id="address" value="<%= user_games_biodata.address %>">
+                        </div>
+                    </div>
+                </div>
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+                      <button onclick="putOperation()"  class="btn btn-primary">Update</button> 
+                      <button onclick="delOperation()"  class="btn btn-danger">Delete</button> 
+                      <a href="/user-games"><button class="btn btn-outline-warning">Cancel</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+    <script>
+      async function putOperation() {
+        try {
+          const id = document.getElementById("id-update").value;
+          const uid = document.getElementById("user_id").value;
+          console.log('id di viewnya ', id)
+          const response = await axios.put(`/user-games/biodata/update/${uid}`, {
+            id: document.getElementById("id-update").value,
+            user_id: document.getElementById("user_id").value,
+            fullname: document.getElementById("fullname").value,
+            gender: document.getElementById("gender").value,
+            date_of_birth: document.getElementById("date_of_birth").value,
+            place_of_birth: document.getElementById("place_of_birth").value,
+            address: document.getElementById("address").value,
+          })
+            .then(function (response) {
+              alert(`Sukses Update Data User Games Biodata`)
+              window.location = `/user-games/biodata/${uid}`
+            })
+            .catch(function (error) {
+              alert(`Sukses Update Data User Games Biodata`)
+              window.location = `/user-games/biodata/${uid}`
+            })
+        } catch (error) {
+          alert(error)
+          window.location = "/user-games"
+        }
+      }
+
+      async function delOperation() {
+        try {
+          const id = document.getElementById("id-update").value;
+          const user_id = document.getElementById("user_id").value;
+          console.log('id di viewnya ', id)
+          console.log('user id di viewnya ', user_id)
+          const response = await axios.delete(`/user-games/biodata/delete/${id}`, {
+            id: document.getElementById("id-update").value,
+            user_id: document.getElementById("user_id").value,
+          })
+            .then(function (response) {
+              alert(`Sukses Hapus Data User Games Biodata`)
+              window.location = `/user-games/biodata/${user_id}`
+            })
+            .catch(function (error) {
+              alert(`Sukses Hapus Data User Games Biodata`)
+              window.location = `/user-games/biodata/${user_id}`
+            })
+        } catch (error) {
+          alert(error)
+          window.location = "/user-games"
+        }
+      }
+    </script>
+  <!-- END: Content-->
+  <%- include('../../partials/foot'); %>
+</body>
+
+</html>

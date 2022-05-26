@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../../partials/head'); %>
+</head>
+
+<body id="main-container" class="default">
+    <!-- START: Header-->
+    <div id="header-fix" class="header fixed-top">
+        <div class="site-width">
+            <%- include('../../partials/nav'); %>
+        </div>
+    </div>
+    <!-- END: Header-->
+
+    <!-- START: Main Menu-->
+    <div class="sidebar">
+        <%- include('../../partials/sidebar2'); %>
+    </div>
+    <!-- END: Main Menu-->
+    <!-- START: Main Content-->
+    <main>
+        <div class="container-fluid site-width">
+            <!-- START: Breadcrumbs-->
+            <div class="row">
+                <div class="col-12  align-self-center">
+                    <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                        <div class="w-sm-100 mr-auto">
+                            <h4 class="mb-0">User Games Biodata</h4>
+                            <p>It is list for usergames biodata</p>
+                        </div>
+
+                        <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">User Games  Biodata</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Breadcrumbs-->
+
+            <!--Mulai Tabel-->
+            <!-- START: Card Data-->
+            <div class="col-12 col-sm-12 mt-3">
+                <div class="card">
+                    <div class="card-header  justify-content-between align-items-center">                               
+                        <!-- <a href="/user-games/add" class="bg-primary py-2 px-2 rounded ml-auto text-white w-100 text-center">
+                                <i class="icon-plus align-middle text-white"></i> <span class="d-none d-xl-inline-block">Add New User Games</span>
+                            </a> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table layout-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">User ID</th>
+                                        <th scope="col">Fullname</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Birth</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% user_games_biodata.forEach(user_games_biodata=> { %>
+                                    <tr>
+                                        <th scope="row"><%= user_games_biodata.id %></th>
+                                        <td><%= user_games_biodata.user_id %></td>
+                                        <td><%= user_games_biodata.fullname %></td>
+                                        <td><%= user_games_biodata.gender %></td>
+                                        <td><%= user_games_biodata.place_of_birth %>,<%= moment(user_games_biodata.date_of_birth).format('Do MMMM, YYYY') %></td>
+                                        <td><%= user_games_biodata.address %></td>
+                                        <td><div class="line-h-1 h5">
+                                            <a class="text-success edit-user" href="/user-games/biodata/<%= user_games_biodata.user_id %>"><i class="icon-pencil"></i></a>
+                                            <a class="text-danger" href="/user-games-biodata/delete/<%= user_games_biodata.id %>"><i class="icon-trash"></i></a>
+                                        </div></td>
+                                    </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table> 
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </main>
+    <!-- END: Content-->
+    <%- include('../../partials/foot'); %>
+</body>
+
+</html>

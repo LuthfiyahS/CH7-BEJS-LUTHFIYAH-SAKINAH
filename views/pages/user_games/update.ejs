@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../../partials/head'); %>
+</head>
+
+<body id="main-container" class="default">
+  <!-- START: Header-->
+  <div id="header-fix" class="header fixed-top">
+    <div class="site-width">
+      <%- include('../../partials/nav'); %>
+    </div>
+  </div>
+  <!-- END: Header-->
+
+  <!-- START: Main Menu-->
+  <div class="sidebar">
+    <%- include('../../partials/sidebar2'); %>
+  </div>
+  <!-- END: Main Menu-->
+  <!-- START: Main Content-->
+  <main>
+    <div class="container-fluid site-width">
+      <!-- START: Breadcrumbs-->
+      <div class="row">
+        <div class="col-12  align-self-center">
+          <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+            <div class="w-sm-100 mr-auto">
+              <h4 class="mb-0">User Games</h4>
+              <p>Welcome to this website</p>
+            </div>
+
+            <ol class="breadcrumb bg-transparent align-self-center m-0 p-0">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">User Games</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- END: Breadcrumbs-->
+
+      <!--Mulai Tabel-->
+      <div class="col-12 col-lg-12 mt-3">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title">Update User Games</h4>
+          </div>
+          <form action="/user-games/update/<%= user_games.id %>" method="POST" enctype="multipart/form-data">
+          <div class="card-content">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <input type="hidden" class="form-control" id="id-update" name="id-update"
+                    value="<%= user_games.id %>" />
+                  <div class="row">
+                    <label for="username" class="col-sm-2 col-form-label">Username</label>
+                    <div class="col-sm-10">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text bg-transparent border-right-0" id="basic-addon11"><i
+                              class="icon-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                          aria-describedby="basic-addon1" id="username" name="username" value="<%= user_games.username %>" required>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="username" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text bg-transparent border-right-0" id="basic-email1"><i
+                              class="icon-envelope"></i></span>
+                        </div>
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Email"
+                          aria-describedby="basic-email" id="email" name="email" value="<%= user_games.email %>" required>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="username" class="col-sm-2 col-form-label">Password</label>
+                    <div class="col-sm-10">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text bg-transparent border-right-0" id="basic-password1"><i
+                              class="icon-options"></i></span>
+                        </div>
+                        <input type="password" class="form-control" placeholder="Password" aria-label="Password"
+                          aria-describedby="basic-password" id="password" name="password" required>
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="row">
+                    <label for="profile" class="col-sm-2 col-form-label">Photo Profile</label>
+                    <div class="col-sm-10">  
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text bg-transparent border-right-0" id="basic-email1"><i class="icon-user"></i></span>
+                            </div>
+                            <input type="file" class="form-control-file"  name="profil" id="profil" accept="image/png, image/jpeg, image/jpg" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <label for="profile" class="col-sm-2 col-form-label">Boomerang Profile</label>
+                  <div class="col-sm-10">  
+                      <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text bg-transparent border-right-0" id="basic-email1"><i class="icon-user"></i></span>
+                          </div>
+                          <input type="file" class="form-control-file"  name="video" id="video" accept="video/mp4" required>
+                      </div>
+                  </div>
+                </div>
+                  <div class="form-group row">
+                    <div class="col-sm-10">
+                      <!-- <button onclick="putOperation()"  class="btn btn-primary">Update</button>  -->
+                      <button type="submit" class="btn btn-primary">Add</button>  
+                      <button onclick="delOperation()"  class="btn btn-danger">Delete</button> 
+                      <a href="/user-games"><button class="btn btn-outline-warning">Cancel</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+    <script>
+      async function putOperation() {
+        try {
+          const id = document.getElementById("id-update").value;
+          console.log('id di viewnya ', id)
+          const response = await axios.put(`/user-games/update/${id}`, {
+            id: document.getElementById("id-update").value,
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+            email: document.getElementById("email").value,
+            profil: document.getElementById("profil").value,
+            video: document.getElementById("video").value,
+          })
+            .then(function (response) {
+              alert(`Sukses Update Data User Games`)
+              window.location = "/user-games"
+            })
+            .catch(function (error) {
+              alert(`Sukses Update Data User Games`)
+              window.location = "/user-games"
+            })
+        } catch (error) {
+          alert(error)
+          window.location = "/user-games"
+        }
+      }
+
+      async function delOperation() {
+        try {
+          const id = document.getElementById("id-update").value;
+          console.log('id di viewnya ', id)
+          const response = await axios.delete(`/user-games/delete/${id}`, {
+            id: document.getElementById("id-update").value,
+          })
+            .then(function (response) {
+              alert(`Sukses Hapys Data User Games`)
+              window.location = "/user-games"
+            })
+            .catch(function (error) {
+              alert(`Sukses Hapus Data User Games`)
+              window.location = "/user-games"
+            })
+        } catch (error) {
+          alert(error)
+          window.location = "/user-games"
+        }
+      }
+    </script>
+  <!-- END: Content-->
+  <%- include('../../partials/foot'); %>
+</body>
+
+</html>
