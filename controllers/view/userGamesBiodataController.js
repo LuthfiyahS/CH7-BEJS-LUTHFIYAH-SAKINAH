@@ -74,7 +74,7 @@ exports.getUserGamesBiodataById = (req, res, next) => {
       include: [{model: UserGames, as : "user"}],
       where: { user_id: user_current.id }
     }).then((user_games_biodata) => {
-    if (!user_current) {
+    if (!user_games_biodata) {
       res.status(302).render("pages/user_games_biodata/add",{user_id:user_current.id, user_current})
     }else{
       res.status(302).render("pages/user_games_biodata/show",{user_games_biodata,moment,user_current})
@@ -96,21 +96,6 @@ exports.getUserGamesBiodataById = (req, res, next) => {
         res.status(500).render('errors/error', { status: 500,message: error.message })
       });
   }
-  UserGamesBiodata.findOne({
-    include: [{model: UserGames, as : "user"}],
-    where: { user_id: req.params.id }
-  })
-    .then((user_games_biodata) => {
-      
-      if (!user_games_biodata) {
-        res.status(400).render("pages/user_games_biodata/add",{user_id:id,user_current})
-      }else{
-        res.status(200).render("pages/user_games_biodata/show",{user_games_biodata,moment,user_current})
-      }
-    })
-    .catch((error) => {
-      res.status(500).render('errors/error', { status: 500,message: error.message })
-    });
 };
 
 exports.update =  (req, res, next) => {
