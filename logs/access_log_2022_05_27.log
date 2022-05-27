@@ -689,3 +689,8 @@
 ::1 - - [27/May/2022:12:02:06 +0000] "GET /google/callback?code=4%2F0AX4XfWjA0hT9zN67i9O6qYLf6G1v4XHWMM1oryCzIxX5cVh-9DdIo7oxNawJ7vQ_nOqDdw&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=4&prompt=consent HTTP/1.1" 302 64
 ::1 - - [27/May/2022:12:02:06 +0000] "GET /dashboard HTTP/1.1" 200 8292
 ::1 - - [27/May/2022:12:02:11 +0000] "GET /user-games HTTP/1.1" 200 9947
+::1 - - [27/May/2022:13:09:45 +0000] "GET / HTTP/1.1" 200 5849
+::1 - - [27/May/2022:13:10:23 +0000] "GET /google HTTP/1.1" 302 0
+::1 - - [27/May/2022:13:10:38 +0000] "GET /google/callback?code=4%2F0AX4XfWhZyGewzeMtnHoIN-LGQaTVngzIymPBzcU-XdUPPejIF_-w8m3ZJrQuAT1ocBiuxA&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+openid&authuser=3&prompt=consent HTTP/1.1" 302 64
+::1 - - [27/May/2022:13:10:38 +0000] "GET /dashboard HTTP/1.1" 200 8279
+::1 - - [27/May/2022:13:11:08 +0000] "GET /user-games HTTP/1.1" 200 9929

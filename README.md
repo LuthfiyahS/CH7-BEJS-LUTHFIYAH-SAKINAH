@@ -1,6 +1,7 @@
-# BEJS-4-LUTHFIYAH SAKINAH-CHALLENGE-6
+# BEJS-4-LUTHFIYAH SAKINAH-CHALLENGE-7
 
-DEPLOYMENT DAN TESTING 
+AUTH DAN MEDIA HANDLING
+Link deploy heroku https://bejs-chapter07.herokuapp.com/ 
 
 ## Getting started CH SEBELUMNYA
 
@@ -29,7 +30,4 @@ http://localhost:3000/v1/view
 Semangat!
 
 ## Getting started CH SEKARANG
-untuk test pakai npm test
-LINK 1 PAKAI GITHUB SUDAH CICD 
-    Link deploy heroku https://bejs-chapter-06.herokuapp.com/ 
-    Link repo https://github.com/LuthfiyahS/bejs-luthfiyah-sakinah-chapter-6/
+Link deploy heroku https://bejs-chapter07.herokuapp.com/ 

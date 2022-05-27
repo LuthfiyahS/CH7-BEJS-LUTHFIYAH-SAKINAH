@@ -1,5 +1,5 @@
 /** @format */
-
+require('dotenv').config();
 const { UserGames, UserGamesBiodata, UserGamesHistory } = require('./../models');
 const bcrypt = require("bcryptjs");
 const passport = require('passport'),
@@ -8,13 +8,13 @@ const passport = require('passport'),
 
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
-const GOOGLE_CLIENT_ID = "930499613773-1bve6v3t33hhnhs122231f5kpspla1cn.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/google/callback",
+  callbackURL: "http://localhost:3000/google/callback" || "https://bejs-chapter07.herokuapp.com/google/callback",
   passReqToCallback: true,
 },
   function (request, accessToken, refreshToken, profile, done) {

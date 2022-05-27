@@ -1,5 +1,6 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken')
-const privateKey = 'ch-bejs'
+const privateKey = process.env.PRIVATE_KEY
 
 exports.verifyJwt = (req, res, next) => {
     const authHeader = req?.headers['authorization']
@@ -21,13 +22,3 @@ exports.verifyJwt = (req, res, next) => {
         next()
     })
 }
-
-// exports.verifyJwtPage = (req, res, next) => {
-//     let token = req?.session?.token
-
-//     jwt.verify(token, privateKey, (err, user) => {
-//         if (err) res.redirect('/login');
-//         req.user = user
-//         next()
-//     })
-// }

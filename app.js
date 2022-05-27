@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const session = require('express-session')
 const app = express();
@@ -38,7 +40,7 @@ app.use(express.json({ limit: '50mb' }));
 
 app.use(flash());
 app.use(session({
-  secret: 'ini-rahasia',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -52,11 +54,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set("view engine", "ejs");
 
 //custom morgan
-// morgan.token('id', (req)=> req.params.id);
-// morgan.token('body', (req)=> JSON.stringify(req.body));
-//app.use(morgan(':id :url :method :body'))
-
-//app.use(morgan('tiny'))
 const originalSend = app.response.send
 
 let log_name = '/logs/access_log_'+moment().format('YYYY_MM_DD')+'.log';
