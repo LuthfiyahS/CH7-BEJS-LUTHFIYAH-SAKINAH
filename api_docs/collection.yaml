@@ -3,7 +3,7 @@ info:
   title: APIGAMES
   version: 1.0.0
 servers:
-  - url:  https://bejs-chapter-06.herokuapp.com/
+  - url:  https://bejs-chapter07.herokuapp.com/
 components:
   securitySchemes:
     bearerAuth:
