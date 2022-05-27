@@ -2,6 +2,7 @@ const { UserGames, UserGamesBiodata, UserGamesHistory, RoleUser } = require("../
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const { v4: uuidv4 } = require('uuid')
+
 exports.index = (req, res) => {
   let user_current = req.user.dataValues
   if(user_current.role_id != 1){
@@ -51,6 +52,7 @@ exports.createUserGames = (req, res, next) => {
   const { username, password, email } = req.body;
   const now = new Date();
   const uid = uuidv4()
+  let user_current = req.user.dataValues;
   if(user_current.role_id != 1){
     res.status(201).redirect("/user-games");
   }
@@ -93,6 +95,7 @@ exports.createUserGames = (req, res, next) => {
   });
 
 };
+
 exports.show = (req, res, next) => {
   const id = req.params.id;
   let user_current = req.user.dataValues
