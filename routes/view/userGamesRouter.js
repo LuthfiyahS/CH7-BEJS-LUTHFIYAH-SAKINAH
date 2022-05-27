@@ -33,11 +33,11 @@ const upload = multer({
                 return cb(new "Error, Only accepted .png .jpg and .jpeg")
             }
         }else{
-            if (file.mimetype == 'video/mp4' || file.mimetype == 'video/quicktime'|| file.mimetype == 'video/wmv' ) {
+            if (file.mimetype == 'video/mp4' || file.mimetype == 'video/quicktime'|| file.mimetype == 'video/x-flv' || file.mimetype == 'video/x-ms-wmv'  || file.mimetype == 'video/3gpp'|| file.mimetype == 'video/MP2T') {
                 cb(null, true)
             } else {
                 cb(null, false)
-                return cb(new "Error, Only accepted video mp4, quicktime, and wmv")
+                return cb(new "Error, Only accepted video mp4, quicktime, wmv, flv, 3gpp, dan MP2T")
             }
         }
         
