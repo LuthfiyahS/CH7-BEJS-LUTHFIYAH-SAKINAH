@@ -3,6 +3,8 @@
 AUTH DAN MEDIA HANDLING
 Link deploy heroku https://bejs-chapter07.herokuapp.com/ 
 
+//Callback Google Oauth tidak di deploy di heroku masih local saja.
+
 ## Getting started CH SEBELUMNYA
 
 Hi. Berikut panduan memulainya
