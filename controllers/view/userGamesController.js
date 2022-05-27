@@ -2,7 +2,7 @@ const { UserGames, UserGamesBiodata, UserGamesHistory, RoleUser } = require("../
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const { v4: uuidv4 } = require('uuid')
-exports.index = (req, res, next) => {
+exports.index = (req, res) => {
   let user_current = req.user.dataValues
   if(user_current.role_id != 1){
     UserGames.findByPk(user_current.id, {
@@ -16,25 +16,26 @@ exports.index = (req, res, next) => {
       .then((user_games) => {
         res.status(200).render("pages/user_games", { user_games,moment,user_current});
       })
-  }
-  UserGames.findAll({include:
-    [
-      { model: UserGamesBiodata, as: "biodata" },
-      { model: UserGamesHistory, as: "history" },
-      { model: RoleUser, as: "role" }
-    ]
-  })
-    .then((user_games) => {
-      if(user_games){
-        //console.log(user_current)
-        res.status(200).render('pages/user_games/', { user_games,moment,user_current })
-      }else{
-        res.status(404).render('error', { status: res.status(404),error:'Data tidak ditemukan' })
-      }
+  }else{
+    UserGames.findAll({include:
+      [
+        { model: UserGamesBiodata, as: "biodata" },
+        { model: UserGamesHistory, as: "history" },
+        { model: RoleUser, as: "role" }
+      ]
     })
-    .catch((error) => {
-      res.status(500).render('error', { status: res.status(500),error: error.message })
-    });
+      .then((user_games) => {
+        if(user_games){
+          //console.log(user_current)
+          res.status(200).render('pages/user_games/', { user_games,moment,user_current })
+        }else{
+          res.status(404).render('error', { status: res.status(404),error:'Data tidak ditemukan' })
+        }
+      })
+      .catch((error) => {
+        res.status(500).render('error', { status: res.status(500),error: error.message })
+      });
+  }
 };
 
 exports.addUserGames = (req, res, next) => {
