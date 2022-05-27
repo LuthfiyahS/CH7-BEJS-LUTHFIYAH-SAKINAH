@@ -33,17 +33,27 @@
                                 <input class="form-control" type="password" id="password" name="password" placeholder="Enter your password">
                             </div>
 
-                            <div class="form-group mb-0">
-                                <button class="btn btn-primary" type="submit"> Log In </button>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <button class="btn btn-lg btn-primary" type="submit"> Log In </button>
+                              </div>
                             </div>
-                            
+                            --- Or connect with ---
+                            <div class="row">
+                              <div class="col-md-12">
+                                <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="/google" style="border-color: gray;"><img src="https://img.icons8.com/color/16/000000/google-logo.png"> Signup Using Google</a>
+                              </div>
+                            </div>
+                            <br>
                             <div class="mt-2">Don't have an account? <a href="/register">Create an Account</a></div>
                             
-                            <div id="g_id_onload"
-                                data-client_id="930499613773-7ok7dfphvj1rlsvajqpv4jvabdiilrof.apps.googleusercontent.com"
+                              <!-- Want to try sample <a href="/google"> Log In With Google </a>? -->
+                            
+                            <!-- <div id="g_id_onload"
+                                data-client_id="930499613773-1bve6v3t33hhnhs122231f5kpspla1cn.apps.googleusercontent.com"
                                 data-callback="handleCredentialResponse">
                             </div>
-                            <div class="g_id_signin" data-type="standard"></div>
+                            <div class="g_id_signin" data-type="standard"></div> -->
                         </div>
                     </form>
                 </div>
@@ -51,6 +61,23 @@
             </div>
         </div>
         <!-- END: Content-->
+        <script>
+          function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
+        </script>
+        <script>
+          function signOut() {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+              console.log('User signed out.');
+            });
+          }
+        </script>
         <%- include('./partials/foot'); %>
     </body>
     <!-- END: Body-->

@@ -1,14 +1,42 @@
 /** @format */
 
-const { UserGames,UserGamesBiodata, UserGamesHistory } = require('./../models');
+const { UserGames, UserGamesBiodata, UserGamesHistory } = require('./../models');
 const bcrypt = require("bcryptjs");
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
 
+
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
+
+const GOOGLE_CLIENT_ID = "930499613773-1bve6v3t33hhnhs122231f5kpspla1cn.apps.googleusercontent.com";
+const GOOGLE_CLIENT_SECRET = "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";
+
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/google/callback",
+  passReqToCallback: true,
+},
+  function (request, accessToken, refreshToken, profile, done) {
+    // let user =profile;
+    // return done(null, user);
+    UserGames.findOne({where: {uid:profile.id}}).then(function (user) {
+      if(!user){
+        UserGames.create({uid: profile.id, username: profile.displayName, email:profile.email, role_id: 2 })
+        .then(user =>{
+          return done(null, user)
+        });
+      }else{
+        return done(null, user);
+      }
+    });
+    
+  }));
+
 passport.use(
   new LocalStrategy(async function (username, password, done) {
     try {
-      const user = await UserGames.findOne({ where: { username: username }},{
+      const user = await UserGames.findOne({ where: { username: username } }, {
         include:
           [
             { model: UserGamesBiodata, as: "biodata" },

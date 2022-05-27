@@ -19,6 +19,24 @@ router.post('/logins',checkNotAuthenticated,passport.authenticate('local',{
     failureRedirect:'login',
     failureFlash:true
 }) )
+
+router.get('/google',checkNotAuthenticated,
+  passport.authenticate('google', { scope: [ 'email', 'profile' ] }
+));
+
+router.get( '/google/callback',
+  passport.authenticate( 'google', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login'
+  })
+);
+function isLoggedIn(req, res, next) {
+  req.user ? next() : res.sendStatus(401);
+}
+router.get('/protected', isLoggedIn, (req, res) => {
+  res.send(`Hello! ${req.user.username}<br> '<a href="/logout">Log Out</a>'`);
+});
+
 router.get("/logout", (req,res)=>{
     req.logOut();
     res.redirect('/login')
