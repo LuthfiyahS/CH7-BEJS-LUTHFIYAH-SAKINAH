@@ -37,6 +37,7 @@ exports.registerproses = (req, res, next) => {
           username,
           password: bcrypt.hashSync(password, 8),
           email,
+          role_id: 2,
           now,
           now,
         })
@@ -50,3 +51,4 @@ exports.registerproses = (req, res, next) => {
     });
   
   };
+

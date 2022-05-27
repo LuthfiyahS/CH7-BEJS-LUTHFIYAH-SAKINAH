@@ -44,11 +44,13 @@
             <!-- START: Card Data-->
             <div class="col-12 col-sm-12 mt-3">
                 <div class="card">
+                    <% if(user_current.role_id == 1){ %> 
                     <div class="card-header  justify-content-between align-items-center">                               
                         <a href="/user-games/add" class="bg-primary py-2 px-2 rounded ml-auto text-white w-100 text-center">
                                 <i class="icon-plus align-middle text-white"></i> <span class="d-none d-xl-inline-block">Add New User Games</span>
                             </a>
                     </div>
+                    <% } %> 
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table layout-primary">
@@ -59,12 +61,15 @@
                                         <th scope="col">Username</th>
                                         <th scope="col">Email</th>
                                         <th scope="col">Video</th>
+                                        <th scope="col">Role</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% user_games.forEach((user_games, index)=> { %>
+                                    
+                                    <% if(user_current.role_id == 1){
+                                        user_games.forEach((user_games, index)=> { %>
                                     <tr>
                                         <th scope="row"><%= index+1 %></th>
                                         <td>
@@ -85,6 +90,7 @@
                                                 NONE
                                             <% } %> 
                                         </td>
+                                        <td><%= user_games.role_id %></td>
                                         <td><%= moment(user_games.createdAt).format('Do MMMM, YYYY') %></td>
                                         <td><div class="line-h-1 h5">
                                             <a class="text-primary" href="/user-games/biodata/<%= user_games.id %>"><i class="icon-people"></i></a>
@@ -93,7 +99,39 @@
                                             <a class="text-danger" href="/user-games/delete/<%= user_games.id %>"><i class="icon-trash"></i></a>
                                         </div></td>
                                     </tr>
-                                    <% }) %>
+                                    <% })} %>
+
+                                    <% if(user_current.role_id != 1){%>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>
+                                            <% if(user_current.profil!=null){ %> 
+                                                <img src="/static/file/images/<%= user_current.profil %>" alt="" class="d-flex img-fluid rounded-circle" width="50">
+                                                <% }else{ %> 
+                                                <img src="/static/images/ava.png" alt="" class="d-flex img-fluid rounded-circle" width="50">
+                                                <% } %> 
+                                        </td>
+                                        <td><%= user_current.username %></td>
+                                        <td><%= user_current.email %></td>
+                                        <td>
+                                            <% if(user_current.video!=null){ %> 
+                                                <video width="320" height="240" controls>
+                                                    <source src="/static/file/video/<%= user_current.video %>" type="video/mp4">
+                                                </video>
+                                            <% }else{ %> 
+                                                NONE
+                                            <% } %> 
+                                        </td>
+                                        <td><%= user_current.role_id %></td>
+                                        <td><%= moment(user_current.createdAt).format('Do MMMM, YYYY') %></td>
+                                        <td><div class="line-h-1 h5">
+                                            <a class="text-primary" href="/user-games/biodata/<%= user_current.id %>"><i class="icon-people"></i></a>
+                                            <a class="text-secondary" href="/user-games/history/<%= user_current.id %>"><i class="icon-folder"></i></a>
+                                            <a class="text-success edit-user" href="/user-games/update/<%= user_current.id %>"><i class="icon-pencil"></i></a>
+                                            <a class="text-danger" href="/user-games/delete/<%= user_current.id %>"><i class="icon-trash"></i></a>
+                                        </div></td>
+                                    </tr>
+                                    <% } %>
                                 </tbody>
                             </table> 
                         </div>

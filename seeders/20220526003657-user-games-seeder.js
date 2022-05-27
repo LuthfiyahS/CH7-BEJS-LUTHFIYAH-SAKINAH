@@ -7,14 +7,11 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     const data = [];
     for (let i = 0; i < 10; i++) {
-      let firstName = faker.name.firstName();
-      let lastName = faker.name.lastName();
-      let email = faker.internet.email(firstName, lastName);
-      let makepassword = Math.floor(Math.random() * 190702) + 2002;
-      let fullName = firstName+makepassword;
-      let password = `pwd${makepassword}`
+      let email = 'Pia'+i+Math.floor(Math.random() * 2)+1+'@gmail.com';
+      let fullName = 'Pia'+i+Math.floor(Math.random() * 2)+1;
+      let password = 'pwd'
       let uid = uuidv4()
-      let role = Math.floor(Math.random() * 3)+1;
+      let role = Math.floor(Math.random() * 2)+1;
       data.push({
         uid,
         username: fullName,

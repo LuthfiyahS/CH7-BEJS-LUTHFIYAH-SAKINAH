@@ -4,9 +4,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path')
 const bodyParser = require("body-parser");
+const moment = require("moment");
+const fs = require('fs');
 
 //logger (morgan)
 const morgan = require("morgan")
+
 
 //passport
 const passport = require("passport")
@@ -53,7 +56,33 @@ app.set("view engine", "ejs");
 // morgan.token('body', (req)=> JSON.stringify(req.body));
 //app.use(morgan(':id :url :method :body'))
 
-app.use(morgan('tiny'))
+//app.use(morgan('tiny'))
+const originalSend = app.response.send
+
+let log_name = '/logs/access_log_'+moment().format('YYYY_MM_DD')+'.log';
+let accessLogStream = fs.createWriteStream(path.join(__dirname, log_name), { flags: 'a' })
+
+app.response.send = function sendOverWrite(body) {
+    originalSend.call(this, body)
+    this.resBody = body
+}
+
+app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length]', {
+  stream: accessLogStream
+}))
+
+morgan.token('res-body', (req, res) => {
+  if(res.getHeader('Content-Type') == 'application/json; charset=utf-8'){
+      if(typeof res.resBody == 'string'){
+          return res.resBody        
+      }else{
+          return JSON.stringify(res.resBody)      
+      }
+  }
+  return JSON.stringify({
+      'message': 'Accessing View'
+  })
+})
 
 app.use("/", routerview);
 app.use("/api/v1", routerapi);

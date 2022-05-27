@@ -64,7 +64,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <% user_games_biodata.forEach(user_games_biodata=> { %>
+                                    <% if(user_current.role_id == 1){
+                                        user_games_biodata.forEach(user_games_biodata=> { %>
                                     <tr>
                                         <th scope="row"><%= user_games_biodata.id %></th>
                                         <td><%= user_games_biodata.user_id %></td>
@@ -77,7 +78,21 @@
                                             <a class="text-danger" href="/user-games-biodata/delete/<%= user_games_biodata.id %>"><i class="icon-trash"></i></a>
                                         </div></td>
                                     </tr>
-                                    <% }) %>
+                                    <% })} else{ %>
+                                    <tr>
+                                        <th scope="row"><%= user_games_biodata.id %></th>
+                                        <td><%= user_games_biodata.user_id %></td>
+                                        <td><%= user_games_biodata.fullname %></td>
+                                        <td><%= user_games_biodata.gender %></td>
+                                        <td><%= user_games_biodata.place_of_birth %>,<%= moment(user_games_biodata.date_of_birth).format('Do MMMM, YYYY') %></td>
+                                        <td><%= user_games_biodata.address %></td>
+                                        <td><div class="line-h-1 h5">
+                                            <a class="text-success edit-user" href="/user-games/biodata/<%= user_games_biodata.user_id %>"><i class="icon-pencil"></i></a>
+                                            <a class="text-danger" href="/user-games-biodata/delete/<%= user_games_biodata.id %>"><i class="icon-trash"></i></a>
+                                        </div></td>
+                                    </tr>
+                                    <% }  %>
+
                                 </tbody>
                             </table> 
                         </div>

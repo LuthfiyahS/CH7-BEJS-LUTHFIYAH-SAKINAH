@@ -1,12 +1,31 @@
-const { UserGames, UserGamesBiodata, UserGamesHistory } = require("../../models");
+const { UserGames, UserGamesBiodata, UserGamesHistory, RoleUser } = require("../../models");
 const bcrypt = require("bcryptjs");
 const moment = require("moment");
 const { v4: uuidv4 } = require('uuid')
 exports.index = (req, res, next) => {
-  UserGames.findAll()
+  let user_current = req.user.dataValues
+  if(user_current.role_id != 1){
+    UserGames.findByPk(user_current.id, {
+      include:
+        [
+          { model: UserGamesBiodata, as: "biodata" },
+          { model: UserGamesHistory, as: "history" },
+          { model: RoleUser, as: "role" }
+        ]
+      })
+      .then((user_games) => {
+        res.status(200).render("pages/user_games", { user_games,moment,user_current});
+      })
+  }
+  UserGames.findAll({include:
+    [
+      { model: UserGamesBiodata, as: "biodata" },
+      { model: UserGamesHistory, as: "history" },
+      { model: RoleUser, as: "role" }
+    ]
+  })
     .then((user_games) => {
       if(user_games){
-        let user_current = req.user.dataValues
         //console.log(user_current)
         res.status(200).render('pages/user_games/', { user_games,moment,user_current })
       }else{
@@ -20,13 +39,20 @@ exports.index = (req, res, next) => {
 
 exports.addUserGames = (req, res, next) => {
   let user_current = req.user.dataValues
+  if(user_current.role_id == 1){
   res.status(200).render("pages/user_games/add",{user_current})
+  }else{
+    res.status(201).redirect("/user-games");
+  }
 };
 
 exports.createUserGames = (req, res, next) => {
   const { username, password, email } = req.body;
   const now = new Date();
   const uid = uuidv4()
+  if(user_current.role_id != 1){
+    res.status(201).redirect("/user-games");
+  }
   UserGames.findOne({
     where: {
       username: username
@@ -68,6 +94,22 @@ exports.createUserGames = (req, res, next) => {
 };
 exports.show = (req, res, next) => {
   const id = req.params.id;
+  let user_current = req.user.dataValues
+  if(user_current.role_id != 1){
+    UserGames.findByPk(user_current.id, {
+      include:
+        [
+          { model: UserGamesBiodata, as: "biodata" },
+          { model: UserGamesHistory, as: "history" }
+        ]
+    })
+      .then((user_games) => {
+        if (!user_games) {
+          res.status(404).render('errors/error', { status: 404,message: "Failed! Data Not Found!" })
+        }
+        res.status(200).render("pages/user_games/update", { user_games,moment,user_current});
+      })
+  }else{
   UserGames.findByPk(id, {
     include:
       [
@@ -79,12 +121,12 @@ exports.show = (req, res, next) => {
       if (!user_games) {
         res.status(404).render('errors/error', { status: 404,message: "Failed! Data Not Found!" })
       }
-      let user_current = req.user.dataValues
       res.status(200).render("pages/user_games/update", { user_games,moment,user_current});
     })
     .catch((error) => {
       res.status(500).render('errors/error', { status: 500,message:  error.message})
     });
+  }
 };
 
 exports.updateUserGames = (req, res, next) => {

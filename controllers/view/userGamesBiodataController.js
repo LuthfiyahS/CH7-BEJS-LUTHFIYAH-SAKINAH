@@ -2,25 +2,39 @@ const { UserGames, UserGamesBiodata } = require("../../models");
 const moment = require("moment");
 
 exports.get =  (req, res, next) => {
-  UserGamesBiodata.findAll({ include: [{model: UserGames, as : "user"}] })
+  let user_current = req.user.dataValues
+  if(user_current.role_id != 1){
+    UserGamesBiodata.findOne({
+      include: [{model: UserGames, as : "user"}],
+      where: { user_id: user_current.id }
+    })
+      .then((user_games_biodata) => {
+          res.status(200).render("pages/user_games_biodata",{user_games_biodata,moment,user_id:user_current.id,user_current})
+      })
+      .catch((error) => {
+        res.status(500).render('errors/error', { status: 500,message: error.message })
+      });
+  }else{
+    UserGamesBiodata.findAll({ include: [{model: UserGames, as : "user"}] })
     .then((user_games_biodata) => {
-        let user_current = req.user.dataValues
-        //console.log(user_current)
-        res.status(200).render('pages/user_games_biodata/', { user_games_biodata,moment, token: token, user_current: user_current })
+        res.status(200).render('pages/user_games_biodata/', { user_games_biodata,moment, user_current: user_current })
     })
     .catch((error) => {
       res.status(500).render('errors/error', { status: 500,message: error.message })
     });
+  }
 };
 
 exports.add = (req, res, next) => {
-    let user_current = req.user.dataValues
+  let user_current = req.user.dataValues
+  if(user_current.role_id == 1){
     res.render("pages/user_games_biodata/add",{user_current})
-  };
+  }
+  res.status(201).redirect("/user-games-biodata");
+};
   
 exports.create = (req, res, next) => {
   let { user_id, fullname, gender, date_of_birth, place_of_birth, address } = req.body
-
   const checkUserGames = (user_id, success, failed) => {
     UserGames.findOne({ where: { id: user_id } }).then((UserGames) => {
       return success(UserGames)
@@ -54,12 +68,40 @@ exports.create = (req, res, next) => {
 
 exports.getUserGamesBiodataById = (req, res, next) => {
   const id = req.params.id;
+  let user_current = req.user.dataValues
+  if(user_current.role_id != 1){
+    UserGamesBiodata.findOne({
+      include: [{model: UserGames, as : "user"}],
+      where: { user_id: user_current.id }
+    }).then((user_games_biodata) => {
+    if (!user_current) {
+      res.status(302).render("pages/user_games_biodata/add",{user_id:user_current.id, user_current})
+    }else{
+      res.status(302).render("pages/user_games_biodata/show",{user_games_biodata,moment,user_current})
+    }})
+  }else{
+    UserGamesBiodata.findOne({
+      include: [{model: UserGames, as : "user"}],
+      where: { user_id: req.params.id }
+    })
+      .then((user_games_biodata) => {
+        
+        if (!user_games_biodata) {
+          res.status(302).render("pages/user_games_biodata/add",{user_id:id,user_current})
+        }else{
+          res.status(302).render("pages/user_games_biodata/show",{user_games_biodata,moment,user_current})
+        }
+      })
+      .catch((error) => {
+        res.status(500).render('errors/error', { status: 500,message: error.message })
+      });
+  }
   UserGamesBiodata.findOne({
     include: [{model: UserGames, as : "user"}],
     where: { user_id: req.params.id }
   })
     .then((user_games_biodata) => {
-      let user_current = req.user.dataValues
+      
       if (!user_games_biodata) {
         res.status(400).render("pages/user_games_biodata/add",{user_id:id,user_current})
       }else{

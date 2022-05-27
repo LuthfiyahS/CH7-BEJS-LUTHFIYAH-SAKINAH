@@ -14,7 +14,13 @@ exports.get = (req, res, next) => {
 };
 exports.add = (req, res, next) => {
     let user_current = req.user.dataValues
-    res.render("pages/user_games_history/add",{user_current})
+    UserGames.findAll()
+    .then((user_games) => {
+      res.render("pages/user_games_history/add",{user_games,user_current})
+    })
+    .catch((error) => {
+      res.status(500).render('errors/error', { status: 500,message: error.message })
+    });
   };
   
 exports.create = (req, res, next) => {
@@ -54,7 +60,18 @@ exports.create = (req, res, next) => {
 
 exports.getUserGamesHistoryById = (req, res, next) => {
   const id = req.params.id;
-  UserGamesHistory.findAll({include: [{model: UserGames, as : "user"}],where: { user_id:id}})
+  let user_current = req.user.dataValues
+  if(user_current.role_id != 1){
+    UserGamesHistory.findAll({include: [{model: UserGames, as : "user"}],where: { user_id:user_current.id}})
+    .then((user_games_history) => {
+        if (!user_games_history) {
+            res.status(400).render("pages/user_games_history/add",{user_id:user_current.id,user_current})
+        }else{
+            res.status(200).render("pages/user_games_history/show",{user_games_history,moment,user_id:user_current.id,user_current})
+        }
+    })
+  }else{
+    UserGamesHistory.findAll({include: [{model: UserGames, as : "user"}],where: { user_id:id}})
     .then((user_games_history) => {
       let user_current = req.user.dataValues
         if (!user_games_history) {
@@ -67,22 +84,35 @@ exports.getUserGamesHistoryById = (req, res, next) => {
       if (!error.status) error.status = 500;
       next(error);
     });
+  }
 };
 
 exports.getById = (req, res, next) => {
   const id = req.params.id;
-  UserGamesHistory.findByPk(id,{include: [{model: UserGames, as : "user"}]})
+  let user_current = req.user.dataValues
+  if(user_current.role_id != 1){
+    UserGamesHistory.findOne({ where: { user_id: user_current.id } },{include: [{model: UserGames, as : "user"}]})
     .then((user_games_history) => {
         if (!user_games_history) {
-            res.status(400).render("pages/user_games_history/add",{user_id:id})
+            res.status(400).render("pages/user_games_history/add",{user_id:user_current.id,user_current})
         }else{
-            res.status(200).render("pages/user_games_history/update",{user_games_history,moment,user_id:id})
+            res.status(200).render("pages/user_games_history/update",{user_games_history,moment,user_id:user_current.id,user_current})
+        }
+    })
+  }else{
+    UserGamesHistory.findByPk(id,{include: [{model: UserGames, as : "user"}]})
+    .then((user_games_history) => {
+        if (!user_games_history) {
+            res.status(400).render("pages/user_games_history/add",{user_id:id,user_current})
+        }else{
+            res.status(200).render("pages/user_games_history/update",{user_games_history,moment,user_id:id,user_current})
         }
     })
     .catch((error) => {
       if (!error.status) error.status = 500;
       next(error);
     });
+  }
 };
 
 exports.update = (req, res, next) => {
